@@ -10,6 +10,8 @@ function App() {
     const [ board, setBoard ] = useState(boardDefault);
     const [currentAttempt, setCurrentAttempt ] = useState({ attempt: 0, letterPosition: 0 });
 
+    const correctWord = 'RIGHT'
+
     const onSelectLetter = (keyValue) => {
         if (currentAttempt.letterPosition > 4) return ;
 
@@ -40,7 +42,7 @@ function App() {
             </nav>
 
             <AppContext.Provider value={
-                { board, setBoard, currentAttempt, setCurrentAttempt, onSelectLetter, onDelete, onEnter }
+                { board, setBoard, currentAttempt, setCurrentAttempt, onSelectLetter, onDelete, onEnter, correctWord }
             }>
                 <div className='game'>
                     <Board />

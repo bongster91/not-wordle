@@ -18,15 +18,15 @@ function Keyboard() {
 
         } else {
             keys1.forEach((key) => {
-                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
+                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
             });
 
             keys2.forEach((key) => {
-                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
+                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
             });
 
             keys3.forEach((key) => {
-                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
+                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
             });
         };
     });
