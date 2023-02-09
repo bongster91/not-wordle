@@ -16,8 +16,10 @@ function App() {
             </nav>
 
             <AppContext.Provider value={{ board, setBoard }}>
-                <Board />
-                <Keyboard />
+                <div className='game'>
+                    <Board />
+                    <Keyboard />
+                </div>
             </AppContext.Provider>
         </div>
     );
