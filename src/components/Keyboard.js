@@ -3,7 +3,7 @@ import Key from "./Key";
 import { AppContext } from '../App';
 
 function Keyboard() {
-    const { onEnter, onDelete, onSelectLetter } = useContext(AppContext);
+    const { onEnter, onDelete, onSelectLetter, disabledLetters } = useContext(AppContext);
 
     const keys1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
     const keys2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
@@ -18,15 +18,15 @@ function Keyboard() {
 
         } else {
             keys1.forEach((key) => {
-                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
+                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
             });
 
             keys2.forEach((key) => {
-                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
+                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
             });
 
             keys3.forEach((key) => {
-                if (event.key.toUpperCase() === key) onSelectLetter(key.toUpperCase());
+                if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
             });
         };
     });
@@ -42,16 +42,16 @@ function Keyboard() {
         <div className="keyboard" onKeyDown={handleKeyboard}>
             <div className="line1">
                 {
-                    keys1.map((key) => {
-                        return <Key keyValue={key} />
+                    keys1.map((key, i) => {
+                        return <Key keyValue={key} key={i} disabled={disabledLetters.has(key)} />
                     })
                 }
             </div>
 
             <div className="line2">
                 {
-                    keys2.map((key) => {
-                        return <Key keyValue={key} />
+                    keys2.map((key, i) => {
+                        return <Key keyValue={key} key={i} disabled={disabledLetters.has(key)} />
                     })
                 }
             </div>
@@ -59,8 +59,8 @@ function Keyboard() {
             <div className="line3">
                 <Key keyValue={'ENTER'} bigKey />
                 {
-                    keys3.map((key) => {
-                        return <Key keyValue={key} />
+                    keys3.map((key, i) => {
+                        return <Key keyValue={key} key={i} disabled={disabledLetters.has(key)} />
                     })
                 }
                 <Key keyValue={'DELETE'} bigKey />
