@@ -27,6 +27,7 @@ nav h1 {
   color: white;
   font-size: 45px;
 }
+
 .game {
   width: 100vw;
   height: calc(100vh - 170px);
@@ -124,4 +125,13 @@ nav h1 {
 }
 #disabled {
   background-color: #3a393c;
+}
+
+.gameover-button {
+    width: 200px;
+    height: 50px;
+    background-color: #3a393c;
+    color: white;
+    font-size: large;
+    border-radius: 10px;
 }

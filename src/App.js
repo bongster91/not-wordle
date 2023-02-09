@@ -4,6 +4,7 @@ import { useState, createContext } from 'react';
 import Board from './components/Board';
 import Keyboard from './components/Keyboard';
 import { boardDefault, generateWordSet } from './Words';
+import GameOver from './components/GameOver';
 
 export const AppContext = createContext();
 
@@ -12,11 +13,13 @@ function App() {
     const [currentAttempt, setCurrentAttempt ] = useState({ attempt: 0, letterPosition: 0 });
     const [ wordSet, setWordSet ] = useState(new Set());
     const [ disabledLetters, setDisabledLetters ] = useState(new Set());
+    const [ gameOver, setGameOver ] = useState({ gameOver: false, guessedWord: false });
     const correctWord = 'RIGHT'
 
     useEffect(() => {
         generateWordSet().then((words) => {
             setWordSet(words.wordSet)
+            console.log(wordSet)
         });
     }, []);
 
@@ -50,13 +53,27 @@ function App() {
         if (wordSet.has(currWord.toLowerCase())) {
             setCurrentAttempt({ attempt: currentAttempt.attempt + 1, letterPosition: 0 });
         } else {
-            alert('word not found')
+            alert('Not in word list')
         };
 
-        if (currWord === correctWord) {
-            alert('You won!')
-        }
+        if (currWord.toUpperCase() === correctWord) {
+            setGameOver({ gameOver: true, guessedWord: true });
+            return;
+        };
 
+        if (currentAttempt.attempt === 5) {
+            setGameOver({ gameOver: true, guessedWord: false });
+            return;
+        };
+
+    };
+
+    const handleReset = () => {
+        wordSet.delete(correctWord);
+        setBoard(boardDefault);
+        setCurrentAttempt({ attempt: 0, letterPosition: 0 });
+        setDisabledLetters(new Set());
+        setGameOver({ gameOver: false, guessedWord: false });
     };
 
     return (
@@ -75,12 +92,21 @@ function App() {
                     onDelete, 
                     onEnter, correctWord, 
                     disabledLetters, 
-                    setDisabledLetters 
+                    setDisabledLetters,
+                    gameOver,
+                    setGameOver,
+                    handleReset,
                 }}
             >
                 <div className='game'>
                     <Board />
-                    <Keyboard />
+
+                    {
+                        gameOver.gameOver ?
+                        <GameOver />
+                        :
+                        <Keyboard />
+                    }
                 </div>
             </AppContext.Provider>
         </div>
