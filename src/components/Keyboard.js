@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useContext } from 'react';
+import React, { useCallback, useEffect, useContext, useMemo } from 'react';
 import Key from "./Key";
 import { AppContext } from '../App';
 
 function Keyboard() {
     const { onEnter, onDelete, onSelectLetter, disabledLetters } = useContext(AppContext);
 
-    const keys1 = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'];
-    const keys2 = ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'];
-    const keys3 = ['Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+    const keys1 = useMemo(() => ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'], []);
+    const keys2 = useMemo(() => ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'], []);
+    const keys3 = useMemo(() => ['Z', 'X', 'C', 'V', 'B', 'N', 'M'], []);
     
     const handleKeyboard = useCallback((event) => {
         if (event.key === 'Enter') {
@@ -29,7 +29,7 @@ function Keyboard() {
                 if (event.key.toLowerCase() === key.toLowerCase()) onSelectLetter(key);
             });
         };
-    });
+    }, [keys1, keys2, keys3, onDelete, onEnter, onSelectLetter]);
     
     useEffect(() => {
         document.addEventListener('keydown', handleKeyboard);
@@ -69,4 +69,4 @@ function Keyboard() {
     );
 };
 
-export default Keyboard;
+export default React.memo(Keyboard);

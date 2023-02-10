@@ -54,7 +54,7 @@ function App() {
         if (wordSet.has(currWord.toLowerCase())) {
             setCurrentAttempt({ attempt: currentAttempt.attempt + 1, letterPosition: 0 });
         } else {
-            alert('Not in word list')
+            return alert('Invalid word')
         };
 
         if (currWord.toUpperCase() === correctWord) {
