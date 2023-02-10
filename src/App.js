@@ -1,25 +1,26 @@
 import './App.css';
-import React, { useEffect } from 'react';
-import { useState, createContext } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
+import { boardDefault, generateWordSet, getNewWord } from './Words';
 import Board from './components/Board';
 import Keyboard from './components/Keyboard';
-import { boardDefault, generateWordSet } from './Words';
 import GameOver from './components/GameOver';
 
 export const AppContext = createContext();
 
 function App() {
     const [ board, setBoard ] = useState(boardDefault);
-    const [currentAttempt, setCurrentAttempt ] = useState({ attempt: 0, letterPosition: 0 });
+    const [ currentAttempt, setCurrentAttempt ] = useState({ attempt: 0, letterPosition: 0 });
     const [ wordSet, setWordSet ] = useState(new Set());
     const [ disabledLetters, setDisabledLetters ] = useState(new Set());
     const [ gameOver, setGameOver ] = useState({ gameOver: false, guessedWord: false });
-    const correctWord = 'RIGHT'
+    const [ correctWord, setCorrectWord ] = useState('');
 
     useEffect(() => {
         generateWordSet().then((words) => {
             setWordSet(words.wordSet)
-            console.log(wordSet)
+        });
+        getNewWord().then((word) => {
+            setCorrectWord(word)
         });
     }, []);
 
@@ -34,7 +35,7 @@ function App() {
     };
 
     const onDelete = () => {
-        if (currentAttempt.letterPosition === 0) return ;
+        if (currentAttempt.letterPosition === 0) return;
 
         const newBoard = [...board];
         newBoard[currentAttempt.attempt][currentAttempt.letterPosition - 1] = '';
@@ -44,7 +45,7 @@ function App() {
 
     const onEnter = () => {
         if (currentAttempt.letterPosition !== 5) return;
-       
+        console.log(correctWord)
         let currWord = '';
         for (let i = 0; i < 5; i++) {
             currWord += board[currentAttempt.attempt][i].toLowerCase();
@@ -68,11 +69,22 @@ function App() {
 
     };
 
-    const handleReset = () => {
-        wordSet.delete(correctWord);
-        setBoard(boardDefault);
+    function handleReset() {
         setCurrentAttempt({ attempt: 0, letterPosition: 0 });
         setDisabledLetters(new Set());
+        setBoard([
+            ['', '', '', '', ''],
+            ['', '', '', '', ''],
+            ['', '', '', '', ''],
+            ['', '', '', '', ''],
+            ['', '', '', '', ''],
+            ['', '', '', '', ''],
+        ]);
+        getNewWord().then((word) => {
+            wordSet.delete(correctWord.toLowerCase())
+            setCorrectWord(word);
+            setWordSet(new Set(wordSet));
+        });
         setGameOver({ gameOver: false, guessedWord: false });
     };
 

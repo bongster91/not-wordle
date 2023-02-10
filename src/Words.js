@@ -20,3 +20,15 @@ export const generateWordSet = async() => {
         });
         return { wordSet };
 };
+
+export const getNewWord = async() => {
+    let newWord;
+
+    await fetch(wordBank)
+        .then((response) => response.text())
+        .then((result) => {
+            const wordArr = result.split('\n')
+            newWord = wordArr[ Math.floor(Math.random() * wordArr.length) ].toUpperCase()
+        })
+        return newWord;
+};

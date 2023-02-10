@@ -6,7 +6,7 @@ function Letter({ letterPosition, attemptValue }) {
     const letter = board[attemptValue][letterPosition];
 
     const correct = correctWord[letterPosition] === letter;
-    const almost =  !correct && letter !== '' && correctWord.includes(letter);
+    const almost =  !correct && letter !== '' && correctWord.split('').includes(letter);
 
     const letterState = currentAttempt.attempt > attemptValue && 
         (correct ? 'correct' : almost ? 'almost' : 'error')
@@ -15,7 +15,7 @@ function Letter({ letterPosition, attemptValue }) {
         if (letter !== '' && !correct && !almost) {
             setDisabledLetters((prev) =>  disabledLetters.add(letter))
         }
-    }, [currentAttempt.attempt]);
+    }, [currentAttempt.attempt, almost, correct]);
     
     return (
         <div className='letter' id={letterState}>
