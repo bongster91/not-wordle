@@ -14,6 +14,7 @@ function App() {
     const [ disabledLetters, setDisabledLetters ] = useState(new Set());
     const [ gameOver, setGameOver ] = useState({ gameOver: false, guessedWord: false });
     const [ correctWord, setCorrectWord ] = useState('');
+    const [ pressedEnter, setPressedEnter ] = useState(false);
 
     useEffect(() => {
         generateWordSet().then((words) => {
@@ -45,7 +46,8 @@ function App() {
 
     const onEnter = () => {
         if (currentAttempt.letterPosition !== 5) return;
-        console.log(correctWord)
+        setPressedEnter(true);
+      
         let currWord = '';
         for (let i = 0; i < 5; i++) {
             currWord += board[currentAttempt.attempt][i].toLowerCase();
@@ -108,6 +110,8 @@ function App() {
                     gameOver,
                     setGameOver,
                     handleReset,
+                    pressedEnter,
+                    setPressedEnter,
                 }}
             >
                 <div className='game'>

@@ -57,13 +57,13 @@ function Keyboard() {
             </div>
 
             <div className="line3">
-                <Key keyValue={'ENTER'} bigKey />
+                <Key keyValue={'ENTER'} bigKey={'big'} />
                 {
                     keys3.map((key, i) => {
                         return <Key keyValue={key} key={i} disabled={disabledLetters.has(key)} />
                     })
                 }
-                <Key keyValue={'DELETE'} bigKey />
+                <Key keyValue={'DELETE'} bigKey={'big'} />
             </div>
         </div>
     );

@@ -65,7 +65,7 @@ nav h1 {
 }
 
 #default {
-    background-color: grey;
+    background-color: black;
 }
 
 #correct {
@@ -121,6 +121,10 @@ nav h1 {
   color: white;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
+}
+
+#normal-size {
+    width: 50px;
 }
 
 #big {
